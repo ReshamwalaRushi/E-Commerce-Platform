@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { body, query } from 'express-validator';
+import { body } from 'express-validator';
 import productsService from '../services/products.service';
 
 export const createProductValidation = [
@@ -73,7 +73,7 @@ class ProductsController {
     }
   }
 
-  async getCategories(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getCategories(_req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const categories = await productsService.getCategories();
 

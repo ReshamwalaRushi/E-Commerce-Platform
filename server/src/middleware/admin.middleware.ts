@@ -4,7 +4,7 @@ import { USER_ROLES } from '../config/constants';
 
 export const requireAdmin = (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ): void => {
   if (!req.user) {

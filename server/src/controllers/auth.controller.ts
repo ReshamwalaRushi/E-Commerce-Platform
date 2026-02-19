@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
 import authService from '../services/auth.service';
-import { validate } from '../middleware/validate.middleware';
 
 export const registerValidation = [
   body('firstName').trim().notEmpty().withMessage('First name is required'),
@@ -44,7 +43,7 @@ class AuthController {
     }
   }
 
-  async logout(req: Request, res: Response): Promise<void> {
+  async logout(_req: Request, res: Response): Promise<void> {
     res.json({
       success: true,
       message: 'Logged out successfully',

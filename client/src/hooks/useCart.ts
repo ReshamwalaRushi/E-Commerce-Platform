@@ -18,7 +18,7 @@ export const useCart = () => {
     mutationFn: ({ productId, quantity }: { productId: string; quantity: number }) =>
       cartApi.addToCart(productId, quantity),
     onSuccess: (response) => {
-      setCart(response.data.data);
+      setCart(response.data.data || null);
       queryClient.invalidateQueries({ queryKey: ['cart'] });
     },
   });
@@ -27,7 +27,7 @@ export const useCart = () => {
     mutationFn: ({ productId, quantity }: { productId: string; quantity: number }) =>
       cartApi.updateCartItem(productId, quantity),
     onSuccess: (response) => {
-      setCart(response.data.data);
+      setCart(response.data.data || null);
       queryClient.invalidateQueries({ queryKey: ['cart'] });
     },
   });
@@ -35,7 +35,7 @@ export const useCart = () => {
   const removeFromCartMutation = useMutation({
     mutationFn: (productId: string) => cartApi.removeFromCart(productId),
     onSuccess: (response) => {
-      setCart(response.data.data);
+      setCart(response.data.data || null);
       queryClient.invalidateQueries({ queryKey: ['cart'] });
     },
   });

@@ -5,7 +5,7 @@ import { Product } from '../models/Product.model';
 import ordersService from '../services/orders.service';
 
 class AdminController {
-  async getDashboard(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getDashboard(_req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const [totalUsers, totalOrders, totalProducts, recentOrders] = await Promise.all([
         User.countDocuments(),
@@ -38,7 +38,7 @@ class AdminController {
     }
   }
 
-  async getOrders(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getOrders(_req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const orders = await ordersService.getAllOrders();
 
@@ -65,7 +65,7 @@ class AdminController {
     }
   }
 
-  async getUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getUsers(_req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const users = await User.find().select('-password').sort({ createdAt: -1 });
 

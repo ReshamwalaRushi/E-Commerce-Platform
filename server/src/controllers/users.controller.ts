@@ -118,13 +118,15 @@ class UsersController {
         throw new NotFoundError('User not found');
       }
 
-      const address = user.addresses.id(req.params.id);
+      const addressIndex = user.addresses.findIndex(
+        (addr: any) => addr._id?.toString() === req.params.id
+      );
       
-      if (!address) {
+      if (addressIndex === -1) {
         throw new NotFoundError('Address not found');
       }
 
-      Object.assign(address, req.body);
+      user.addresses[addressIndex] = { ...user.addresses[addressIndex], ...req.body };
       await user.save();
 
       res.json({
@@ -149,7 +151,9 @@ class UsersController {
         throw new NotFoundError('User not found');
       }
 
-      user.addresses.pull(req.params.id);
+      user.addresses = user.addresses.filter(
+        (addr: any) => addr._id?.toString() !== req.params.id
+      );
       await user.save();
 
       res.json({
