@@ -1,7 +1,15 @@
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'default_secret_change_in_production';
-const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'default_refresh_secret';
+// Validate JWT secrets are set in production
+if (!process.env.JWT_SECRET || !process.env.JWT_REFRESH_SECRET) {
+  console.error('FATAL ERROR: JWT_SECRET and JWT_REFRESH_SECRET must be defined in environment variables');
+  if (process.env.NODE_ENV === 'production') {
+    process.exit(1);
+  }
+}
+
+const JWT_SECRET = process.env.JWT_SECRET || 'default_secret_FOR_DEVELOPMENT_ONLY';
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'default_refresh_secret_FOR_DEVELOPMENT_ONLY';
 
 export interface TokenPayload {
   userId: string;

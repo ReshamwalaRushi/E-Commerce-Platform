@@ -4,6 +4,9 @@ export const CONSTANTS = {
   BCRYPT_SALT_ROUNDS: 10,
   DEFAULT_PAGE_SIZE: 12,
   MAX_PAGE_SIZE: 100,
+  TAX_RATE: 0.1, // 10% tax
+  FREE_SHIPPING_THRESHOLD: 100, // Free shipping for orders over $100
+  SHIPPING_COST: 10, // Standard shipping cost
 };
 
 export const ORDER_STATUS = {

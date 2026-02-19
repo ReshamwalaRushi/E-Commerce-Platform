@@ -215,6 +215,27 @@ VITE_API_URL=http://localhost:5000/api
 - `PUT /api/admin/orders/:id/status` - Update order status
 - `GET /api/admin/users` - Get all users
 
+## 🔒 Security Considerations
+
+### Implemented Security Features
+- JWT-based authentication with token expiration
+- Password hashing with bcrypt (10 rounds)
+- Helmet for security headers
+- CORS configuration
+- Input validation with express-validator
+- Strict TypeScript mode for type safety
+- Environment variable validation for production
+
+### Recommended Additional Security Measures (For Production)
+- **Rate Limiting**: Implement rate limiting middleware (e.g., express-rate-limit) to prevent brute-force attacks
+- **CSRF Protection**: Add CSRF token protection for state-changing operations
+- **HTTP-only Cookies**: Store JWT tokens in HTTP-only cookies instead of localStorage for better XSS protection
+- **Content Security Policy**: Implement strict CSP headers
+- **API Input Sanitization**: Add additional input sanitization beyond validation
+- **Database Query Parameterization**: Already implemented via Mongoose, prevents SQL injection
+- **Secrets Management**: Use proper secrets management service (AWS Secrets Manager, HashiCorp Vault, etc.)
+- **Regular Dependency Updates**: Keep dependencies updated to patch known vulnerabilities
+
 ## 🧪 Testing
 
 ### Run Backend Tests

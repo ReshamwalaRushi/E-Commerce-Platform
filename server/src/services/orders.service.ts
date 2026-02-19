@@ -2,7 +2,7 @@ import { Order, IOrder, IShippingAddress } from '../models/Order.model';
 import { Cart } from '../models/Cart.model';
 import { Product } from '../models/Product.model';
 import { NotFoundError, ValidationError } from '../utils/apiError.util';
-import { ORDER_STATUS } from '../config/constants';
+import { ORDER_STATUS, CONSTANTS } from '../config/constants';
 
 export interface CreateOrderData {
   shippingAddress: IShippingAddress;
@@ -52,8 +52,8 @@ class OrdersService {
       await product.save();
     }
 
-    const tax = subtotal * 0.1; // 10% tax
-    const shippingCost = subtotal > 100 ? 0 : 10;
+    const tax = subtotal * CONSTANTS.TAX_RATE;
+    const shippingCost = subtotal > CONSTANTS.FREE_SHIPPING_THRESHOLD ? 0 : CONSTANTS.SHIPPING_COST;
     const total = subtotal + tax + shippingCost;
 
     const order = await Order.create({
