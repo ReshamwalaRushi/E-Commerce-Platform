@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/store/authStore';
 import { authApi } from '@/lib/api';
+import { User } from '@/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,10 +12,10 @@ export const useAuth = () => {
   const loginMutation = useMutation({
     mutationFn: authApi.login,
     onSuccess: (response) => {
-      const { user, token } = response.data.data;
-      setUser(user);
-      setToken(token);
-      localStorage.setItem('token', token);
+      const data = response.data.data as { user: User | null; token: string };
+      setUser(data.user);
+      setToken(data.token);
+      localStorage.setItem('token', data.token);
       queryClient.invalidateQueries({ queryKey: ['user'] });
       navigate('/');
     },
@@ -23,10 +24,10 @@ export const useAuth = () => {
   const registerMutation = useMutation({
     mutationFn: authApi.register,
     onSuccess: (response) => {
-      const { user, token } = response.data.data;
-      setUser(user);
-      setToken(token);
-      localStorage.setItem('token', token);
+      const data = response.data.data as { user: User | null; token: string };
+      setUser(data.user);
+      setToken(data.token);
+      localStorage.setItem('token', data.token);
       navigate('/');
     },
   });
