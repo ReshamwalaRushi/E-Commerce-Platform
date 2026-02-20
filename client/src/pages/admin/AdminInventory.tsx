@@ -241,10 +241,10 @@ export const AdminInventory = () => {
               </div>
               <div className="bg-muted rounded-lg p-3 text-sm text-center">
                 <p className="text-muted-foreground">
-                  {updateModal.stock}{' '}
-                  {adjustType === 'add' ? `+ ${adjustQty}` : adjustType === 'remove' ? `- ${adjustQty}` : '→'}{' '}
-                  {adjustType === 'set' ? adjustQty : ''} ={' '}
-                  <span className="font-bold text-foreground">{getNewStock()}</span>
+                  {adjustType === 'set'
+                    ? `Set to ${adjustQty}`
+                    : `${updateModal.stock} ${adjustType === 'add' ? '+' : '-'} ${adjustQty}`}{' '}
+                  = <span className="font-bold text-foreground">{getNewStock()}</span>
                 </p>
               </div>
               <div>
