@@ -94,6 +94,15 @@ export const usersApi = {
     axios.delete<ApiResponse<Address[]>>(`/users/addresses/${id}`),
 };
 
+// Reviews API
+export const reviewsApi = {
+  getReviews: (productId: string) =>
+    axios.get<ApiResponse<import('@/types').Review[]>>(`/products/${productId}/reviews`),
+
+  createReview: (productId: string, data: { rating: number; title: string; comment: string }) =>
+    axios.post<ApiResponse<import('@/types').Review>>(`/products/${productId}/reviews`, data),
+};
+
 // Admin API
 export const adminApi = {
   getDashboard: () => axios.get<ApiResponse<DashboardStats>>('/admin/dashboard'),

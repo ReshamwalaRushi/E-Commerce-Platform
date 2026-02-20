@@ -24,3 +24,9 @@ export function truncateText(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength) + '...';
 }
+
+export const CART_CONSTANTS = {
+  TAX_RATE: 0.08,
+  FREE_SHIPPING_THRESHOLD: 100,
+  SHIPPING_COST: 9.99,
+};
