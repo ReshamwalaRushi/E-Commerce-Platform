@@ -126,7 +126,7 @@ export const AdminInventory = () => {
             <Select value={stockFilter} onChange={e => { setStockFilter(e.target.value); setPage(1); }} className="sm:w-48">
               <option value="">All Stock</option>
               <option value="out">Out of Stock</option>
-              <option value="low">Low Stock (&lt;10)</option>
+              <option value="low">{'Low Stock (<10)'}</option>
               <option value="good">Good Stock (10+)</option>
             </Select>
           </div>

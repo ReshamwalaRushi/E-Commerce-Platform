@@ -42,12 +42,12 @@ const BEST_PRODUCTS = [
   { name: 'Python Book', category: 'Books', unitsSold: 67, revenue: 2010 },
 ];
 
-const downloadCSV = (data: Record<string, unknown>[], filename: string) => {
+const downloadCSV = (data: object[], filename: string) => {
   if (data.length === 0) return;
   const keys = Object.keys(data[0]);
   const csv = [
     keys.join(','),
-    ...data.map(row => keys.map(k => JSON.stringify(row[k] ?? '')).join(','))
+    ...data.map(row => keys.map(k => JSON.stringify((row as Record<string, unknown>)[k] ?? '')).join(','))
   ].join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
@@ -172,7 +172,7 @@ export const AdminReports = () => {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Revenue Trend</CardTitle>
-                <Button size="sm" variant="outline" onClick={() => downloadCSV(slicedData as unknown as Record<string, unknown>[], `sales_report_${new Date().toISOString().split('T')[0]}.csv`)}>
+                <Button size="sm" variant="outline" onClick={() => downloadCSV(slicedData, `sales_report_${new Date().toISOString().split('T')[0]}.csv`)}>
                   <Download className="h-4 w-4 mr-1" /> Export CSV
                 </Button>
               </CardHeader>
@@ -196,7 +196,7 @@ export const AdminReports = () => {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Best Selling Products</CardTitle>
-                <Button size="sm" variant="outline" onClick={() => downloadCSV(BEST_PRODUCTS as unknown as Record<string, unknown>[], `products_report_${new Date().toISOString().split('T')[0]}.csv`)}>
+                <Button size="sm" variant="outline" onClick={() => downloadCSV(BEST_PRODUCTS, `products_report_${new Date().toISOString().split('T')[0]}.csv`)}>
                   <Download className="h-4 w-4 mr-1" /> Export CSV
                 </Button>
               </CardHeader>
@@ -259,7 +259,7 @@ export const AdminReports = () => {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Customer Growth</CardTitle>
-                <Button size="sm" variant="outline" onClick={() => downloadCSV(slicedData as unknown as Record<string, unknown>[], `customers_report_${new Date().toISOString().split('T')[0]}.csv`)}>
+                <Button size="sm" variant="outline" onClick={() => downloadCSV(slicedData, `customers_report_${new Date().toISOString().split('T')[0]}.csv`)}>
                   <Download className="h-4 w-4 mr-1" /> Export CSV
                 </Button>
               </CardHeader>
@@ -311,7 +311,7 @@ export const AdminReports = () => {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Order Trends</CardTitle>
-                <Button size="sm" variant="outline" onClick={() => downloadCSV(slicedData as unknown as Record<string, unknown>[], `orders_report_${new Date().toISOString().split('T')[0]}.csv`)}>
+                <Button size="sm" variant="outline" onClick={() => downloadCSV(slicedData, `orders_report_${new Date().toISOString().split('T')[0]}.csv`)}>
                   <Download className="h-4 w-4 mr-1" /> Export CSV
                 </Button>
               </CardHeader>

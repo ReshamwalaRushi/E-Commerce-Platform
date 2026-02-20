@@ -75,7 +75,7 @@ export const AdminUsers = () => {
       setEditUser(null);
       fetchUsers();
     } catch {
-      showToast('User update endpoint not available yet', 'error');
+      showToast('Failed to update user', 'error');
       setEditUser(null);
     } finally {
       setSaving(false);
