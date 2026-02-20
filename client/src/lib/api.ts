@@ -1,6 +1,6 @@
 import axios from './axios';
 import { ApiResponse } from '@/types/api.types';
-import { User, Product, Cart, Order, Address } from '@/types';
+import { User, Product, Cart, Order, Address, DashboardStats } from '@/types';
 
 // Auth API
 export const authApi = {
@@ -96,13 +96,21 @@ export const usersApi = {
 
 // Admin API
 export const adminApi = {
-  getDashboard: () =>
-    axios.get<ApiResponse>('/admin/dashboard'),
-  
-  getOrders: () => axios.get<ApiResponse<Order[]>>('/admin/orders'),
-  
-  updateOrderStatus: (id: string, status: string) =>
-    axios.put<ApiResponse<Order>>(`/admin/orders/${id}/status`, { status }),
-  
-  getUsers: () => axios.get<ApiResponse<User[]>>('/admin/users'),
+  getDashboard: () => axios.get<ApiResponse<DashboardStats>>('/admin/dashboard'),
+
+  getOrders: (filters?: { status?: string; startDate?: string; endDate?: string; search?: string }) =>
+    axios.get<ApiResponse<Order[]>>('/admin/orders', { params: filters }),
+
+  getOrderById: (id: string) => axios.get<ApiResponse<Order>>(`/admin/orders/${id}`),
+
+  updateOrderStatus: (id: string, status: string, notes?: string) =>
+    axios.put<ApiResponse<Order>>(`/admin/orders/${id}/status`, { status, notes }),
+
+  getUsers: (filters?: { role?: string; status?: string; search?: string }) =>
+    axios.get<ApiResponse<User[]>>('/admin/users', { params: filters }),
+
+  getUserById: (id: string) => axios.get<ApiResponse<User>>(`/admin/users/${id}`),
+
+  updateUser: (id: string, data: Partial<User>) =>
+    axios.put<ApiResponse<User>>(`/admin/users/${id}`, data),
 };

@@ -82,3 +82,31 @@ export interface Review {
   comment: string;
   createdAt: string;
 }
+
+export interface DashboardStats {
+  totalUsers: number;
+  totalOrders: number;
+  totalProducts: number;
+  totalRevenue: number;
+  recentOrders: Order[];
+}
+
+export interface OrderFilters {
+  status?: string;
+  startDate?: string;
+  endDate?: string;
+  search?: string;
+}
+
+export interface UserFilters {
+  role?: string;
+  status?: string;
+  search?: string;
+}
+
+export interface ProductFilters {
+  category?: string;
+  status?: string;
+  stock?: string;
+  search?: string;
+}
