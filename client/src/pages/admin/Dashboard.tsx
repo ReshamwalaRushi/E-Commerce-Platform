@@ -57,6 +57,7 @@ const TOP_PRODUCTS = [
 export const Dashboard = () => {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [allOrders, setAllOrders] = useState<Order[]>([]);
   const [lowStockProducts, setLowStockProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [revenueData] = useState(generateRevenueData);
@@ -69,8 +70,9 @@ export const Dashboard = () => {
         productsApi.getProducts({ limit: 100 }),
       ]);
       setStats(dashRes.data.data as DashboardStats);
-      const allOrders = (ordersRes.data.data as Order[]) || [];
-      setOrders(allOrders.slice(0, 5));
+      const fetchedOrders = (ordersRes.data.data as Order[]) || [];
+      setAllOrders(fetchedOrders);
+      setOrders(fetchedOrders.slice(0, 5));
       const allProducts = (productsRes.data.data as Product[]) || [];
       setLowStockProducts(allProducts.filter(p => p.stock < 10).slice(0, 5));
     } catch (err) {
@@ -211,7 +213,13 @@ export const Dashboard = () => {
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={220}>
-            <BarChart data={ORDER_STATUS_DATA}>
+            <BarChart data={[
+              { status: 'Pending', count: allOrders.filter(o => o.status === 'pending').length || ORDER_STATUS_DATA[0].count },
+              { status: 'Processing', count: allOrders.filter(o => o.status === 'processing').length || ORDER_STATUS_DATA[1].count },
+              { status: 'Shipped', count: allOrders.filter(o => o.status === 'shipped').length || ORDER_STATUS_DATA[2].count },
+              { status: 'Delivered', count: allOrders.filter(o => o.status === 'delivered').length || ORDER_STATUS_DATA[3].count },
+              { status: 'Cancelled', count: allOrders.filter(o => o.status === 'cancelled').length || ORDER_STATUS_DATA[4].count },
+            ]}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="status" />
               <YAxis />
