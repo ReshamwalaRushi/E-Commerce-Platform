@@ -4,6 +4,11 @@ import { Layout } from '@/components/layout/Layout';
 import { AdminLayout } from '@/components/layout/AdminLayout';
 import { Home } from '@/pages/Home';
 import { Products } from '@/pages/Products';
+import { ProductDetail } from '@/pages/ProductDetail';
+import { Cart } from '@/pages/Cart';
+import { Checkout } from '@/pages/Checkout';
+import { Orders } from '@/pages/Orders';
+import { Profile } from '@/pages/Profile';
 import { Login } from '@/pages/Login';
 import { Register } from '@/pages/Register';
 import { useAuthStore } from '@/store/authStore';
@@ -46,17 +51,26 @@ function App() {
 
             <Route path="/" element={<Layout><Home /></Layout>} />
             <Route path="/products" element={<Layout><Products /></Layout>} />
+            <Route path="/products/:id" element={<Layout><ProductDetail /></Layout>} />
+            <Route path="/cart" element={<Layout><Cart /></Layout>} />
             <Route path="/login" element={<Layout><Login /></Layout>} />
             <Route path="/register" element={<Layout><Register /></Layout>} />
+            <Route
+              path="/checkout"
+              element={
+                <Layout>
+                  <PrivateRoute>
+                    <Checkout />
+                  </PrivateRoute>
+                </Layout>
+              }
+            />
             <Route
               path="/profile"
               element={
                 <Layout>
                   <PrivateRoute>
-                    <div className="container py-8">
-                      <h1 className="text-3xl font-bold">Profile</h1>
-                      <p className="text-muted-foreground mt-2">Profile page coming soon...</p>
-                    </div>
+                    <Profile />
                   </PrivateRoute>
                 </Layout>
               }
@@ -66,22 +80,8 @@ function App() {
               element={
                 <Layout>
                   <PrivateRoute>
-                    <div className="container py-8">
-                      <h1 className="text-3xl font-bold">My Orders</h1>
-                      <p className="text-muted-foreground mt-2">Orders page coming soon...</p>
-                    </div>
+                    <Orders />
                   </PrivateRoute>
-                </Layout>
-              }
-            />
-            <Route
-              path="/cart"
-              element={
-                <Layout>
-                  <div className="container py-8">
-                    <h1 className="text-3xl font-bold">Shopping Cart</h1>
-                    <p className="text-muted-foreground mt-2">Cart page coming soon...</p>
-                  </div>
                 </Layout>
               }
             />

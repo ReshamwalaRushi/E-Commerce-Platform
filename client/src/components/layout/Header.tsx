@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, User, Menu, LogOut } from 'lucide-react';
+import { ShoppingCart, User, Menu, LogOut, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { useCart } from '@/hooks/useCart';
@@ -8,7 +8,7 @@ import { useUIStore } from '@/store/uiStore';
 export const Header = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const { itemsCount } = useCart();
-  const { toggleCart, setMobileMenuOpen } = useUIStore();
+  const { setMobileMenuOpen } = useUIStore();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -35,17 +35,23 @@ export const Header = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={toggleCart} className="relative">
+          <Link to="/cart" className="relative inline-flex items-center justify-center h-10 w-10 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors">
             <ShoppingCart className="h-5 w-5" />
             {itemsCount > 0 && (
               <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-xs text-primary-foreground flex items-center justify-center">
                 {itemsCount}
               </span>
             )}
-          </Button>
+          </Link>
 
           {isAuthenticated ? (
             <div className="hidden md:flex items-center gap-2">
+              <Link to="/orders">
+                <Button variant="ghost" size="sm">
+                  <Package className="h-4 w-4 mr-2" />
+                  Orders
+                </Button>
+              </Link>
               <Link to="/profile">
                 <Button variant="ghost" size="sm">
                   <User className="h-4 w-4 mr-2" />
